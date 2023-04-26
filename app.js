@@ -57,14 +57,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultDisplay = document.getElementById("result");
   let cardsChosen = [];
   let cardsChosenId = [];
-  let cardsWon = [];
+  const cardsWon = [];
 
   createBoard();
 
   // Create your board
   function createBoard() {
     for (let i = 0; i < cardArray.length; i++) {
-      let card = document.createElement("img");
+      const card = document.createElement("img");
       card.setAttribute("src", "images/blank.png");
       card.dataset.id = i;
       card.addEventListener("click", flipCard);
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Flip your card
   function flipCard() {
-    let cardId = this.dataset.id;
+    const cardId = this.dataset.id;
     if (cardsChosenId[0] === cardId) return;
     cardsChosenId.push(cardId);
     cardsChosen.push(cardArray[cardId].name);
@@ -86,13 +86,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Check for matches
   function checkForMatch() {
-    let cards = document.querySelectorAll("img");
+    const cards = document.querySelectorAll("img");
     const optionOneId = cardsChosenId[0];
     const optionTwoId = cardsChosenId[1];
     if (cardsChosen[0] === cardsChosen[1]) {
       alert("You found a match");
       cards[optionOneId].setAttribute("src", "images/white.png");
       cards[optionTwoId].setAttribute("src", "images/white.png");
+      cards[optionOneId].removeEventListener("click", flipCard);
+      cards[optionTwoId].removeEventListener("click", flipCard);
       cardsWon.push(cardsChosen);
     } else {
       alert("Sorry, try again");
